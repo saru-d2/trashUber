@@ -31,8 +31,7 @@ class _HomeState extends State<Home> {
             textAlign: TextAlign.center,
           ),
         ),
-
-        onTap: (){
+        onTap: () {
           Navigator.push(context, MaterialPageRoute(builder: (context) {
             return identifier[text];
           }));
@@ -47,10 +46,10 @@ class _HomeState extends State<Home> {
     return loading
         ? Loading()
         : Scaffold(
-            backgroundColor: Colors.deepPurple[100],
             appBar: AppBar(
                 title: Text("Home"),
-                backgroundColor: Colors.deepPurple[400],
+                backgroundColor: Colors.red,
+                elevation: 0.2,
                 actions: <Widget>[
                   FlatButton.icon(
                       icon: Icon(Icons.person),
