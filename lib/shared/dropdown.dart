@@ -63,7 +63,7 @@ class MainDrawer extends StatelessWidget {
                 Icons.money,
                 color: Colors.black,
               ),
-              title: Text("Place order"),
+              title: Text("New Order"),
               onTap: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
                   return new FormScreen();
