@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "560435120791",
+    "firebase_url": "https://trashuber-de3d8.firebaseio.com",
+    "project_id": "trashuber-de3d8",
+    "storage_bucket": "trashuber-de3d8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:560435120791:android:401a803923156fa08ab7d2",
+        "android_client_info": {
+          "package_name": "com.example.trash_uber"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "560435120791-aq6ttv1kpfk36a085muq090cmt77sprp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.trash_uber",
+            "certificate_hash": "6f0a4272546812e63801fc5d09cb7b008d2deb14"
+          }
+        },
+        {
+          "client_id": "560435120791-l96vprpvgpv5e7smhegd2grbrtdgjqpl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBXdpnaw3_1Ts1XeQcevxpaaXuT7O01roQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "560435120791-l96vprpvgpv5e7smhegd2grbrtdgjqpl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
