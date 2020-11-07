@@ -1,11 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:trash_uber/models/user.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class Authservice {
   final GoogleSignIn _googleSignIn = GoogleSignIn();
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  // final Firestore _db = Firestore.instance;
+  final Firestore _db = Firestore.instance;
   //new user based on firebase user
   User _userFromFirebaseUser(FirebaseUser user) {
     return user != null ? User(uid: user.uid) : null;
@@ -49,11 +50,16 @@ class Authservice {
       AuthResult result = await _auth.createUserWithEmailAndPassword(
           email: email, password: passwd);
       FirebaseUser fbuser = result.user;
+      _db.collection('users').document(fbuser.uid).setData({
+        'uid': fbuser.uid,
+        'email': email,
+      });
       return _userFromFirebaseUser(fbuser);
     } catch (e) {
       print(e.toString());
       return null;
     }
+
   }
 
   //sign out
@@ -90,9 +96,15 @@ class Authservice {
         accessToken: googleAuth.accessToken,
         idToken: googleAuth.idToken,
       );
+
       final AuthResult authresult =
           await _auth.signInWithCredential(credential);
       FirebaseUser user = authresult.user;
+      _db.collection('users').document(user.uid).setData({
+        'uid': user.uid,
+        'email': user.email,
+      });
+      print(user);
       return _userFromFirebaseUser(user);
     } catch (e) {
       print(e.toString());

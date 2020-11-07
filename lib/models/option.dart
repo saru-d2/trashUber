@@ -34,7 +34,7 @@ List<Option> options = [
 
 
 class OptionDisplay {
-  String name;
+  String name = "";
   dynamic link;
   OptionDisplay(String name){
     this.name = name;
