@@ -42,15 +42,15 @@ class _FormScreenState extends State<FormScreen> {
     return DropDownFormField(
       titleText : "Type of Payment",
       hintText : "Type of Payment",
-      value : _place,
+      value : _payment,
       onSaved: (value) {
         setState(() {
-          _place = value;
+          _payment = value;
         });
       },
       onChanged: (value) {
         setState(() {
-          _place = value;
+          _payment = value;
         });
       },
       dataSource: [
