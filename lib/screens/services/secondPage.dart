@@ -38,6 +38,11 @@ class _SecondPageState extends State<SecondPage> {
                     textColor: Colors.white,
                     onPressed: () async {
                       // do make accepted for the order true, then add it to accepted orders, and then add to chats
+                      var res = await Firestore.instance.collection('orders').document(widget.orderID).get();
+                      var already_acc = res.data['accepted'];
+                      if(already_acc == true){
+                        return;
+                      }
                       print("startes");
                       final accepted = await _auth.getUser();
                       final ordered = await Firestore.instance.collection("orders").document(widget.orderID).get().then((value){
@@ -66,6 +71,14 @@ class _SecondPageState extends State<SecondPage> {
                         "user" : ordered,
                       });
                       print("part5");
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context){
+                            return AlertDialog(
+                              content: Text("You have accepted the order"),
+                            );
+                          }
+                      );
                     },
                 )
               ]),
