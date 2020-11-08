@@ -117,6 +117,23 @@ class MainDrawer extends StatelessWidget {
               },
             ),
           ),
+          InkWell(
+            onTap: () {},
+            child: ListTile(
+              leading: Icon(
+                Icons.personal_video,
+                color: Colors.black,
+              ),
+              title: Text("Your accepted"),
+              onTap: () async {
+                final user = await _auth.getUser();
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return new DisplayAccepted(type: "accepted", uid: user.uid);
+                }));
+              },
+            ),
+          ),
+
           /*
           ListTile(
             
