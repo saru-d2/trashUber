@@ -88,10 +88,10 @@ class _FormScreenState extends State<FormScreen> {
           'display' : "Wet waste",
           'value' : "Wet waste"
         },
-//        {
-//          'display' : "DLF",
-//          'value' : "DLF"
-//        }
+        {
+          'display' : "Recyclable Waste",
+          'value' : "Recyclable Waste"
+        }
       ],
       textField: 'display',
       valueField: 'value',

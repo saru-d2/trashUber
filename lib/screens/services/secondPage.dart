@@ -36,7 +36,7 @@ class _SecondPageState extends State<SecondPage> {
                 Text('Address: '+widget.description3, style: TextStyle(color: Colors.black, fontSize: 20),),
                 SizedBox(height:30),
                 RaisedButton(
-                    child: Text('Accept Order', style: TextStyle(color: Colors.white, fontSize: 20),),
+                    child: Text('Accept Waste', style: TextStyle(color: Colors.white, fontSize: 20),),
                     color: Theme.of(context).primaryColor,
                     textColor: Colors.white,
                     onPressed: () async {
@@ -78,7 +78,7 @@ class _SecondPageState extends State<SecondPage> {
                           context: context,
                           builder: (BuildContext context){
                             return AlertDialog(
-                              content: Text("You have accepted the order"),
+                              content: Text("You have accepted the waste"),
                             );
                           }
                       );

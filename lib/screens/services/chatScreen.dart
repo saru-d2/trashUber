@@ -50,14 +50,14 @@ class _chatScreenState extends State<chatScreen> {
             });
             Firestore.instance.collection("chats").document(widget.chat_id).delete();
             Firestore.instance.collection("accepted_orders").document(widget.chat_id).delete();
-            if(value == "Cancel Order"){
-              Firestore.instance.collection("orders").document(widget.chat_id).updateData({
-                "accepted" : false,
-              });
-            }
-            else{
+//            if(value == "Cancel Order"){
+//              Firestore.instance.collection("orders").document(widget.chat_id).updateData({
+//                "accepted" : false,
+//              });
+//            }
+//            else{
               Firestore.instance.collection("orders").document(widget.chat_id).delete();
-            }
+//            }
           },
         ))
             .toList(),
