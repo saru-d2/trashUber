@@ -143,7 +143,7 @@ class _FormScreenState extends State<FormScreen> {
                           .setData({
                         'items': _items,
                         'address': _address,
-                        'type_of_payment': _payment,
+                        'mode_of_payment': _payment,
                         'User_id': user.uid,
                         'place' : _place,
                         'accepted' : false,
