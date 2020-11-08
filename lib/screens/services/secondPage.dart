@@ -55,7 +55,7 @@ class _SecondPageState extends State<SecondPage> {
                           "accepted" : true,
                       });
                       print("part2");
-                      Firestore.instance.collection("accepted_orders").document().setData({
+                      Firestore.instance.collection("accepted_orders").document(widget.orderID).setData({
                         "accepted" : accepted.uid,
                         "ordered" : ordered,
                         "chat_id" : widget.orderID,
