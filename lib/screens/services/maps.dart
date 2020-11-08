@@ -1,8 +1,10 @@
 // import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:collection';
 import 'dart:async';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:geolocator/geolocator.dart';
-
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:trash_uber/services/authenticate.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
@@ -53,34 +55,35 @@ class MapView extends StatefulWidget {
 class _MapViewState extends State<MapView> {
   CameraPosition _initialLocation = CameraPosition(target: LatLng(0.0, 0.0));
   GoogleMapController mapController;
-  final Geolocator _geolocator = Geolocator();
-  Position _currentPosition;
+  final Authservice _auth = Authservice();
+  final Firestore _db = Firestore.instance;
 
-  _getCurrentLocation() async {
-    print("ATTEMPTING TO ACCESS LOC");
-    await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
-        .then((Position position) async {
-      setState(() {
-        _currentPosition = position;
-        print('CURRENT POS: $_currentPosition');
-        mapController.animateCamera(
-          CameraUpdate.newCameraPosition(
-            CameraPosition(
-              target: LatLng(position.latitude, position.longitude),
-              zoom: 18.0,
-            ),
+  final Geolocator _geolocator = Geolocator();
+  GeoPoint _currentPosition;
+
+  _setCurrentLocation() async {
+    print("ATTEMPTING TO SET LOC");
+    var user = await _auth.getUser();
+    var res = await _db.collection('users').document(user.uid).get();
+    _currentPosition = res.data['location'];
+    print("TESTING ${res.data['location'].latitude}");
+    mapController.animateCamera(
+      CameraUpdate.newCameraPosition(
+        CameraPosition(
+          target: LatLng(
+            res.data['location'].latitude,
+            res.data['location'].longitude,
           ),
-        );
-      });
-    }).catchError((e) {
-      print(e);
-    });
+          zoom: 18.0,
+        ),
+      ),
+    );
   }
 
   @override
   void initState() {
     super.initState();
-    _getCurrentLocation();
+    _setCurrentLocation();
   }
 
   @override
@@ -106,65 +109,90 @@ class _MapViewState extends State<MapView> {
                 mapController = controller;
               },
             ),
-            ClipOval(
-              child: Material(
-                color: Colors.orange[100],
-                child: InkWell(
-                  splashColor: Colors.orange,
-                  child: SizedBox(
-                    width: 56,
-                    height: 56,
-                    child: Icon(Icons.add),
-                  ),
-                  onTap: () {
-                    mapController.animateCamera(
-                      CameraUpdate.zoomIn(),
-                    );
-                  },
-                ),
-              ),
-            ),
-            ClipOval(
-              child: Material(
-                color: Colors.orange[100], // button color
-                child: InkWell(
-                  splashColor: Colors.orange, // inkwell color
-                  child: SizedBox(
-                    width: 56,
-                    height: 56,
-                    child: Icon(Icons.zoom_out_map),
-                  ),
-                  onTap: () {
-                    mapController.animateCamera(
-                      CameraUpdate.zoomOut(),
-                    );
-                  },
-                ),
-              ),
-            ),
-            ClipOval(
-              child: Material(
-                color: Colors.orange[100], // button color
-                child: InkWell(
-                  splashColor: Colors.orange, // inkwell color
-                  child: SizedBox(
-                    width: 56,
-                    height: 56,
-                    child: Icon(Icons.my_location),
-                  ),
-                  onTap: () {
-                    mapController.animateCamera(
-                      CameraUpdate.newCameraPosition(
-                        CameraPosition(
-                          target: LatLng(100.0, -100.0
-                              // _currentPosition.latitude,
-                              // _currentPosition.longitude,
-                              ),
-                          zoom: 18.0,
+            SafeArea(
+              child: Padding(
+                padding: const EdgeInsets.only(left: 10.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    ClipOval(
+                      child: Material(
+                        color: Colors.blue[100], // button color
+                        child: InkWell(
+                          splashColor: Colors.blue, // inkwell color
+                          child: SizedBox(
+                            width: 50,
+                            height: 50,
+                            child: Icon(Icons.add),
+                          ),
+                          onTap: () {
+                            mapController.animateCamera(
+                              CameraUpdate.zoomIn(),
+                            );
+                          },
                         ),
                       ),
-                    );
-                  },
+                    ),
+                    SizedBox(height: 20),
+                    ClipOval(
+                      child: Material(
+                        color: Colors.blue[100], // button color
+                        child: InkWell(
+                          splashColor: Colors.blue, // inkwell color
+                          child: SizedBox(
+                            width: 50,
+                            height: 50,
+                            child: Icon(Icons.remove),
+                          ),
+                          onTap: () {
+                            mapController.animateCamera(
+                              CameraUpdate.zoomOut(),
+                            );
+                          },
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ),
+            SafeArea(
+              child: Align(
+                alignment: Alignment.bottomRight,
+                child: Padding(
+                  padding: const EdgeInsets.only(right: 10.0, bottom: 10.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    mainAxisSize: MainAxisSize.max,
+                    children: <Widget>[
+                      ClipOval(
+                        child: Material(
+                          color: Colors.orange[100], // button color
+                          child: InkWell(
+                            splashColor: Colors.orange, // inkwell color
+                            child: SizedBox(
+                              width: 56,
+                              height: 56,
+                              child: Icon(Icons.my_location),
+                            ),
+                            onTap: () {
+                              mapController.animateCamera(
+                                CameraUpdate.newCameraPosition(
+                                  CameraPosition(
+                                    target: LatLng(
+                                      _currentPosition.latitude,
+                                      _currentPosition.longitude,
+                                    ),
+                                    zoom: 18.0,
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
                 ),
               ),
             ),
