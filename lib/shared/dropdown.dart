@@ -51,8 +51,8 @@ class MainDrawer extends StatelessWidget {
               ),
               title: Text("Maps"),
               onTap: () {
-                Navigator.push(
-                    context, MaterialPageRoute(builder: (context) => Maps()));
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => MapView()));
               },
             ),
           ),

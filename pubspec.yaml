@@ -40,6 +40,7 @@ dependencies:
   flutter_signin_button: ^1.0.0
   firebase_storage: ^3.1.6
   google_maps_flutter: ^1.0.6
+  geolocator: ^6.1.5
 
 
   dropdown_formfield: ^0.1.2 # for form dropdown

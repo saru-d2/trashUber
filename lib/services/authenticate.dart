@@ -92,7 +92,7 @@ class Authservice {
   Future<String> getCurrentUserEmail() async {
     FirebaseUser user = await _auth.currentUser();
     final String email = user.email.toString();
-    print(email);
+    // print(email);
     return email;
   }
 
