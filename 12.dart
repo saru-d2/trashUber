@@ -6,6 +6,7 @@ import 'package:trash_uber/screens/services/wash.dart';
 import 'package:trash_uber/screens/services/profile.dart';
 import 'package:trash_uber/screens/settings/settings.dart';
 import 'package:trash_uber/screens/services/displayOrdersToDeliver.dart';
+import 'package:firebase/firebase.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:trash_uber/services/authenticate.dart';
 import 'package:geolocator/geolocator.dart';
@@ -54,7 +55,6 @@ class _MainDrawerState extends State<MainDrawer> {
 
   @override
   Widget build(BuildContext context) {
-    _getCurrentLocation();
     return Drawer(
       child: ListView(
         children: <Widget>[
@@ -64,7 +64,7 @@ class _MainDrawerState extends State<MainDrawer> {
             accountEmail: FutureBuilder<String>(
               future: _auth.getCurrentUserEmail(),
               builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
-                // _getCurrentLocation();
+                _getCurrentLocation();
                 if (snapshot.hasData) {
                   return Text(snapshot.data);
                 } else {
@@ -169,23 +169,16 @@ class _MainDrawerState extends State<MainDrawer> {
               ),
               title: Text("get location"),
               onTap: () async {
-                print("load $loading");
-                print("currLoc $_currLocation");
-                if (!loading ) {
+                print(loading);
+                if (!loading) {
                   print(dbUser.data["uid"]);
                   print(dbUser.data["location"].toString());
                   print(_currLocation.toString());
-                  _db.collection('users').document(dbUser.data["uid"].toString()).setData({ 'location': GeoPoint(_currLocation.latitude, _currLocation.longitude) ,
-                  }, merge: true);
+                  // _db.collection('users').document(dbUser.data["uid"].toString()).setData({ 'location': GeoPoint(_currLocation.latitude, _currLocation.longitude) ,
+                  // });
                 }
               },
             ),
-          ),
-          RaisedButton(
-            child: Text("Teat"),
-            onPressed: () {
-              _getCurrentLocation();
-            }
           ),
           /*
           ListTile(
@@ -266,18 +259,16 @@ class _MainDrawerState extends State<MainDrawer> {
     );
   }
 
-  
-   _getCurrentLocation() {
-     print("jiji");
-    geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.best)
+  _getCurrentLocation() {
+    geolocator
+        .getCurrentPosition(desiredAccuracy: LocationAccuracy.best)
         .then((Position position) {
       setState(() {
-
         _currLocation = position;
-        print("pos $position");
       });
     }).catchError((e) {
       print(e);
     });
   }
 }
+
