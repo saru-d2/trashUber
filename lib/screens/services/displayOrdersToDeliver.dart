@@ -71,7 +71,7 @@ class _DisplayAcceptedState extends State<DisplayAccepted> {
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) => chatScreen(chat_id : documentSnapshot["chat_id"] , user_id : widget.uid)));
+                                          builder: (context) => chatScreen(chat_id : documentSnapshot["chat_id"] , user_id : widget.uid, type : widget.type)));
                                 }),
                           ),
                         ));
