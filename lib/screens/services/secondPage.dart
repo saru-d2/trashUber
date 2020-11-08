@@ -29,7 +29,7 @@ class _SecondPageState extends State<SecondPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                Text('Mode of Payment: '+widget.description, style: TextStyle(color: Colors.black, fontSize: 20),),
+                Text('Type of Payment: '+widget.description, style: TextStyle(color: Colors.black, fontSize: 20),),
                 SizedBox(height:30),
                 Text('Items: '+widget.description2, style: TextStyle(color: Colors.black, fontSize: 20),),
                 SizedBox(height:30),
