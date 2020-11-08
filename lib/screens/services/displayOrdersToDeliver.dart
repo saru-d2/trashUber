@@ -56,14 +56,14 @@ class _DisplayAcceptedState extends State<DisplayAccepted> {
                     DocumentSnapshot documentSnapshot =
                     orderList.elementAt(index);
                     return Card(
-                        key: Key(documentSnapshot["address"]),
+                        key: Key(" "),
                         child: Card(
                           elevation: 4,
                           margin: EdgeInsets.all(8),
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(8)),
                           child: ListTile(
-                            title: Text(documentSnapshot["address"]),
+                            title: Text(" "),
                             trailing: FlatButton(
                                 child: Text("go to chat"),
                                 onPressed: () {
