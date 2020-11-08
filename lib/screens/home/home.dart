@@ -6,6 +6,10 @@ import 'package:trash_uber/shared/dropdown.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:trash_uber/shared/loading.dart';
 import 'package:trash_uber/models/option.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -13,7 +17,44 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  final Firestore _db = Firestore.instance;
   final Authservice _auth = Authservice();
+  final Geolocator _geolocator = Geolocator();
+  var user;
+  Position _currentPosition;
+
+  _getCurrentLocation() async {
+    print("ATTEMPTING TO ACCESS LOC");
+    await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
+        .then((Position position) async {
+      setState(() {
+        _currentPosition = position;
+        print('CURRENT POS: $_currentPosition');
+        _db.collection('users').document(user.uid).setData({
+          'location':
+              GeoPoint(_currentPosition.latitude, _currentPosition.longitude),
+        }, merge: true);
+      });
+    }).catchError((e) {
+      print(e);
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    print("inside initstate");
+    getuid();
+    _getCurrentLocation();
+  }
+
+  void getuid() async {
+    var temp = await _auth.getUser();
+    setState(() {
+      user = temp;
+    });
+    print("user");
+  }
 
   bool loading = true;
   List<String> favs = [];
