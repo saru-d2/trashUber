@@ -20,7 +20,7 @@ class _FormScreenState extends State<FormScreen> {
 
   Widget _buildItems() {
     return TextFormField(
-      decoration: InputDecoration(labelText: "Items"),
+      decoration: InputDecoration(labelText: "Waste type"),
       validator: (val) => val.isEmpty ? 'enter Items' : null,
       onSaved: (String value) {
         _items = value;
@@ -39,18 +39,9 @@ class _FormScreenState extends State<FormScreen> {
   }
 
   Widget _buildPayment() {
-    return TextFormField(
-      decoration: InputDecoration(labelText: "Mode Of payment"),
-      validator: (val) => val.isEmpty ? 'enter mode of payment' : null,
-      onSaved: (String value) {
-        _payment = value;
-      },
-    );
-  }
-  Widget _buildplace(){
     return DropDownFormField(
-      titleText : "From where do you want your order",
-      hintText : "From where do you want your order ",
+      titleText : "Type of Payment",
+      hintText : "Type of Payment",
       value : _place,
       onSaved: (value) {
         setState(() {
@@ -64,13 +55,43 @@ class _FormScreenState extends State<FormScreen> {
       },
       dataSource: [
         {
-          'display' : "JC",
-          'value' : "JC"
+          'display' : "Free",
+          'value' : "Free"
         },
         {
-          'display' : "DLF",
-          'value' : "DLF"
+          'display' : "Paid",
+          'value' : "Paid"
         }
+      ],
+      textField: 'display',
+      valueField: 'value',
+
+    );
+  }
+  Widget _buildplace(){
+    return DropDownFormField(
+      titleText : "Type of waste",
+      hintText : "Type of waste",
+      value : _place,
+      onSaved: (value) {
+        setState(() {
+          _place = value;
+        });
+      },
+      onChanged: (value) {
+        setState(() {
+          _place = value;
+        });
+      },
+      dataSource: [
+        {
+          'display' : "Wet waste",
+          'value' : "Wet waste"
+        },
+//        {
+//          'display' : "DLF",
+//          'value' : "DLF"
+//        }
       ],
       textField: 'display',
       valueField: 'value',
@@ -101,7 +122,7 @@ class _FormScreenState extends State<FormScreen> {
                 SizedBox(height: 120),
                 RaisedButton(
                     color: Colors.deepOrange[400],
-                    child: Text('Order!',
+                    child: Text('Sell!',
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 16,
@@ -113,17 +134,20 @@ class _FormScreenState extends State<FormScreen> {
                       }
                       _formKey.currentState.save();
                       final user = await _auth.getUser();
-
+//                      var user = await _auth.getUser();
+                      var res = await Firestore.instance.collection('users').document(user.uid).get();
+                      var currentPosition = res.data['location'];
                       Firestore.instance
                           .collection('orders')
                           .document()
                           .setData({
                         'items': _items,
                         'address': _address,
-                        'mode_of_payment': _payment,
+                        'type_of_payment': _payment,
                         'User_id': user.uid,
                         'place' : _place,
                         'accepted' : false,
+                        'geolocation' : currentPosition,
                       });
                       _formKey.currentState.reset();   //to reset the form after each submission
                     //   alert to tell the user the order has been placed
@@ -131,7 +155,7 @@ class _FormScreenState extends State<FormScreen> {
                         context: context,
                         builder: (BuildContext context){
                             return AlertDialog(
-                              content: Text("Your Order has been Placed"),
+                              content: Text("We have made buyers of waste awaare of your waste."),
                             );
                         }
                       );
