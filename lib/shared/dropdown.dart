@@ -105,7 +105,7 @@ class MainDrawer extends StatelessWidget {
             onTap: () {},
             child: ListTile(
               leading: Icon(
-                Icons.personal_video,
+                Icons.add_alert_rounded,
                 color: Colors.black,
               ),
               title: Text("Your Delivery"),
@@ -121,7 +121,7 @@ class MainDrawer extends StatelessWidget {
             onTap: () {},
             child: ListTile(
               leading: Icon(
-                Icons.personal_video,
+                Icons.message,
                 color: Colors.black,
               ),
               title: Text("Your accepted"),
