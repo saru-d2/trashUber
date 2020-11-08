@@ -1,5 +1,8 @@
+// import 'dart:html';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:trash_uber/models/user.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -7,6 +10,7 @@ class Authservice {
   final GoogleSignIn _googleSignIn = GoogleSignIn();
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final Firestore _db = Firestore.instance;
+
   //new user based on firebase user
   User _userFromFirebaseUser(FirebaseUser user) {
     return user != null ? User(uid: user.uid) : null;
@@ -59,7 +63,6 @@ class Authservice {
       print(e.toString());
       return null;
     }
-
   }
 
   //sign out
@@ -84,12 +87,23 @@ class Authservice {
     }
   }
 
+  Future<String> currentUser() async {
+    FirebaseUser user = await _auth.currentUser();
+    return user.uid;
+  }
+
+  Future<String> getCurrentUserEmail() async {
+    FirebaseUser user = await _auth.currentUser();
+    final String email = user.email.toString();
+    // print(email);
+    return email;
+  }
+
   //google sign in
   Future signInWithGoogle() async {
     try {
       final GoogleSignInAccount _googleUser = await _googleSignIn.signIn();
-      if( _googleUser == null)
-        return false;
+      if (_googleUser == null) return false;
       final GoogleSignInAuthentication googleAuth =
           await _googleUser.authentication;
       final AuthCredential credential = GoogleAuthProvider.getCredential(
