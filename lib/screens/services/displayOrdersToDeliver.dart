@@ -56,14 +56,14 @@ class _DisplayAcceptedState extends State<DisplayAccepted> {
                     DocumentSnapshot documentSnapshot =
                     orderList.elementAt(index);
                     return Card(
-                        key: Key("bruh"),
+                        key: Key(documentSnapshot["address"]),
                         child: Card(
                           elevation: 4,
                           margin: EdgeInsets.all(8),
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(8)),
                           child: ListTile(
-                            title: Text("bruh"),
+                            title: Text(documentSnapshot["address"]),
                             trailing: FlatButton(
                                 child: Text("go to chat"),
                                 onPressed: () {
@@ -71,7 +71,7 @@ class _DisplayAcceptedState extends State<DisplayAccepted> {
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) => chatScreen(chat_id : documentSnapshot["chat_id"] , user_id : widget.uid)));
+                                          builder: (context) => chatScreen(chat_id : documentSnapshot["chat_id"] , user_id : widget.uid, type : widget.type)));
                                 }),
                           ),
                         ));
