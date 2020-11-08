@@ -3,11 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:trash_uber/services/authenticate.dart';
 
 class SecondPage extends StatefulWidget {
-  SecondPage({@required this.title, this.description, this.description2, this.orderID, this.from});
+  SecondPage({@required this.title, this.description, this.description2,this.description3, this.orderID, this.from});
 
   String title;
   String description;
   String description2;
+  String description3;
   String orderID;
   String from;
   @override
@@ -31,6 +32,8 @@ class _SecondPageState extends State<SecondPage> {
                 Text('Mode of Payment: '+widget.description, style: TextStyle(color: Colors.black, fontSize: 20),),
                 SizedBox(height:30),
                 Text('Items: '+widget.description2, style: TextStyle(color: Colors.black, fontSize: 20),),
+                SizedBox(height:30),
+                Text('Address: '+widget.description3, style: TextStyle(color: Colors.black, fontSize: 20),),
                 SizedBox(height:30),
                 RaisedButton(
                     child: Text('Accept Order', style: TextStyle(color: Colors.white, fontSize: 20),),
