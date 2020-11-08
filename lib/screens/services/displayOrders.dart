@@ -182,7 +182,7 @@ class _DisplayOrdersState extends State<DisplayOrders> {
                                     context,
                                     MaterialPageRoute(
                                       builder: (context) => SecondPage(
-                                        title: documentSnapshot['address'], description: documentSnapshot['mode_of_payment'], description2: documentSnapshot['items'],description3: documentSnapshot['address'] ,orderID:documentSnapshot.documentID, from:documentSnapshot['place'], )));
+                                        title: documentSnapshot['address'], description: documentSnapshot['mode_of_payment'], description2: documentSnapshot['items'],description3: documentSnapshot['address'], description4: documentSnapshot['weight'] ,orderID:documentSnapshot.documentID, from:documentSnapshot['place'], )));
                                 }),
                           ),
                         ));

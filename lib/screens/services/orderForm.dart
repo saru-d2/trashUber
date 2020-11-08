@@ -15,6 +15,7 @@ class _FormScreenState extends State<FormScreen> {
   String _address;
   String _payment;
   String _place = '';
+  String _weight = '';
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
@@ -27,6 +28,16 @@ class _FormScreenState extends State<FormScreen> {
       },
     );
   }
+  Widget _buildWeight() {
+    return TextFormField(
+      decoration: InputDecoration(labelText: "Waste weight"),
+      validator: (val) => val.isEmpty ? 'enter Weight' : null,
+      onSaved: (String value) {
+        _weight = value;
+      },
+    );
+  }
+
 
   Widget _buildAddress() {
     return TextFormField(
@@ -115,6 +126,7 @@ class _FormScreenState extends State<FormScreen> {
               // mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 _buildItems(),
+                _buildWeight(),
                 _buildAddress(),
                 _buildPayment(),
                 SizedBox(height:20),
@@ -148,6 +160,7 @@ class _FormScreenState extends State<FormScreen> {
                         'place' : _place,
                         'accepted' : false,
                         'geolocation' : currentPosition,
+                        'weight' : _weight,
                       });
                       _formKey.currentState.reset();   //to reset the form after each submission
                     //   alert to tell the user the order has been placed
@@ -155,7 +168,7 @@ class _FormScreenState extends State<FormScreen> {
                         context: context,
                         builder: (BuildContext context){
                             return AlertDialog(
-                              content: Text("We have made buyers of waste awaare of your waste."),
+                              content: Text("We have made buyers of waste aware of your waste."),
                             );
                         }
                       );

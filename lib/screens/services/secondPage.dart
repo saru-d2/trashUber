@@ -3,12 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:trash_uber/services/authenticate.dart';
 
 class SecondPage extends StatefulWidget {
-  SecondPage({@required this.title, this.description, this.description2,this.description3, this.orderID, this.from});
+  SecondPage({@required this.title, this.description, this.description2,this.description3,this.description4, this.orderID, this.from});
 
   String title;
   String description;
   String description2;
   String description3;
+  String description4;
   String orderID;
   String from;
   @override
@@ -34,6 +35,8 @@ class _SecondPageState extends State<SecondPage> {
                 Text('Items: '+widget.description2, style: TextStyle(color: Colors.black, fontSize: 20),),
                 SizedBox(height:30),
                 Text('Address: '+widget.description3, style: TextStyle(color: Colors.black, fontSize: 20),),
+                SizedBox(height:30),
+                Text('Weight: '+widget.description4, style: TextStyle(color: Colors.black, fontSize: 20),),
                 SizedBox(height:30),
                 RaisedButton(
                     child: Text('Accept Waste', style: TextStyle(color: Colors.white, fontSize: 20),),
