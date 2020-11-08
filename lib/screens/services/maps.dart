@@ -64,33 +64,27 @@ class _MapViewState extends State<MapView> {
   GeoPoint _currentPosition;
 
   _getDocs() async {
-    print("inside");
     QuerySnapshot querySnapshot =
         await Firestore.instance.collection("orders").getDocuments();
-    print("after");
-    var list = querySnapshot.documents;
-    print("${list.length} list length");
-    // for (int i = 0; i < querySnapshot.documents.length; i++) {
-    //   print("$i");
-    //   var l = querySnapshot.documents[i].data["geolocation"];
-    //   print("$i");
-    //   print(
-    //       "$i ${querySnapshot.documents[i].documentID} ${l.latitude} ${l.longitude}");
-    //   // Start Location Marker
-    //   Marker m = Marker(
-    //     markerId: MarkerId('$i'),
-    //     position: LatLng(
-    //       l.latitude,
-    //       l.longitude,
-    //     ),
-    //     infoWindow: InfoWindow(
-    //       title: 'Start',
-    //       snippet: "$i",
-    //     ),
-    //     icon: BitmapDescriptor.defaultMarker,
-    //   );
-    //   markers.add(m);
-    // }
+    for (int i = 0; i < querySnapshot.documents.length; i++) {
+      var l = querySnapshot.documents[i].data["geolocation"];
+      print(
+          "$i ${querySnapshot.documents[i].documentID} ${l.latitude} ${l.longitude}");
+      // Start Location Marker
+      Marker m = Marker(
+        markerId: MarkerId('$i'),
+        position: LatLng(
+          l.latitude,
+          l.longitude,
+        ),
+        infoWindow: InfoWindow(
+          title: 'Start',
+          snippet: "$i",
+        ),
+        icon: BitmapDescriptor.defaultMarker,
+      );
+      markers.add(m);
+    }
   }
 
   _setCurrentLocation() async {
